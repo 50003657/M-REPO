@@ -1,0 +1,32 @@
+name: Build Maven Artifact
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  MAVEN_CLI_OPTS: "-s settings.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=repository"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: 14
+
+    - name: Build with Maven
+      run: mvn $MAVEN_CLI_OPTS clean install
+
+    - name: Publish Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: target/*.jar
