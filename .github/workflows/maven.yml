@@ -29,7 +29,9 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-           mkdir staging && cp target/*.jar staging
+      
+    - name: crating folder
+      run: mkdir staging && cp target/*.jar staging
       
     - name: Cache
       uses: actions/cache@v3
@@ -41,11 +43,12 @@ jobs:
       # An ordered list of keys to use for restoring stale cache if no cache hit occurred for key. Note `cache-hit` returns false in this case.
       restore-keys: ${{ runner.os }}-m2
     
-    -name: persistant as artifacts
-     uses: actions/upload-artifact@v3
-     with:
-       name: github-actions-artifact
-       path: staging
+    - name: Publish Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: my-artifact
+        path: staging
+
     
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
