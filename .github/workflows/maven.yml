@@ -32,7 +32,7 @@ jobs:
            mkdir staging && cp target/*.jar staging
       
     - name: Cache
-      uses: actions/cache@v3.2.4
+      uses: actions/cache@v3
       with:
       # A list of files, directories, and wildcard patterns to cache and restore
       path: -/.m2
@@ -42,7 +42,7 @@ jobs:
       restore-keys: ${{ runner.os }}-m2
     
     -name: persistant as artifacts
-     uses: actions/upload-artifactv@3
+     uses: actions/upload-artifact@v3
      with:
        name: github-actions-artifact
        path: staging
